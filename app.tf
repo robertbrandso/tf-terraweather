@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     http = {
-      source = "hashicorp/http"
+      source  = "hashicorp/http"
       version = "3.0.1"
     }
   }
@@ -12,12 +12,16 @@ provider "http" {
 }
 
 variable "zipcode" {
-    type = string
-    default = "90210"
+  type    = string
+  default = "90210"
+  validation {
+    condition     = length(var.zipcode) == 5 && can(tonumber(var.zipcode))
+    error_message = "The zip code isn't a valid USA zip code."
+  }
 }
 
 variable "api_key" {
-    type = string
+  type = string
 }
 
 data "http" "weather" {
@@ -37,9 +41,9 @@ data "http" "weather" {
 }
 
 locals {
-    result = jsondecode(data.http.weather.response_body)
+  result = jsondecode(data.http.weather.response_body)
 }
 
 output "report" {
-    value = "The temp in ${local.result.name} is ${local.result.main.temp}F and ${local.result.weather.0.main}."
+  value = "The temp in ${local.result.name} is ${local.result.main.temp}F and ${local.result.weather.0.main}."
 }
