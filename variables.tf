@@ -15,5 +15,5 @@ variable "country" {
 
 variable "api_key" {
   description = "(Required) Get your API key at openweathermap.org/api"
-  type    = string
+  type        = string
 }
