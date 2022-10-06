@@ -15,5 +15,4 @@ variable "country" {
 
 variable "api_key" {
   type    = string
-  default = "48692e9c7b55b7ee897fde7d8f18b955"
 }
